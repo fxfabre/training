@@ -36,14 +36,26 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+% Sum de Theta
+sumTheta = 0;
+for i=2:size(theta)
+    sumTheta = sumTheta + theta(i)*theta(i);
+end
+sumTheta = sumTheta * lambda / 2;
 
+% Compute cost
+h = sigmoid(X * theta);
+cost = -y' * log(h) - (1-y)' * log(1 - h);
+cost = cost + sumTheta;
+J = cost / m;
 
-
-
-
-
-
-
+% compute gradient
+error = sigmoid(X * theta) - y;
+grad = error' * X;
+for j=2:size(theta,1)
+    grad(j) = grad(j) + lambda * theta(j);
+end
+grad = grad / m;
 
 % =============================================================
 
